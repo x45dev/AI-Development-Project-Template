@@ -22,10 +22,11 @@ python.uv_venv_create_args = ["--seed"]
 # --- Tools ---
 [tools]
 age = "latest"
-go = "1.24"           # For Fabric - https://github.com/danielmiessler/fabric
-hadolint = "latest"   # Dockerfile linter
+go = "1.24"            # For Fabric - https://github.com/danielmiessler/fabric
+hadolint = "latest"    # Dockerfile linter
 jq = "latest"
 mc = "latest"
+node = "22"            # For MCP servers
 python = "3.13"
 shellcheck = "latest"  # Shell linter
 sops = "latest"

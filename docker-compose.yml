@@ -1,0 +1,25 @@
+services:
+  basic-memory:
+    image: ghcr.io/basicmachines-co/basic-memory:latest
+    volumes:
+      -./memory-bank:/data/knowledge:rw # Persist memory to the local memory-bank folder
+    stdin_open: true
+    tty: true
+
+  task-master:
+    image: node:20-slim
+    command: npx -y --package=task-master-ai task-master-ai
+    environment:
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - PERPLEXITY_API_KEY=${PERPLEXITY_API_KEY}
+      - OPENAI_API_KEY=${OPENAI_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_KEY}
+      - MISTRAL_API_KEY=${MISTRAL_KEY}
+      - OPENROUTER_API_KEY=${OPENROUTER_KEY}
+      - XAI_API_KEY=${XAI_KEY}
+      - AZURE_OPENAI_API_KEY=${AZURE_KEY}
+    # This makes the server accessible to the VSCode agent via stdio
+    # when configured with a 'docker run' command.
+    stdin_open: true
+    tty: true
+

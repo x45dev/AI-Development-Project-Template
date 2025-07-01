@@ -1,24 +1,25 @@
 //.vscode/mcp.json
 {
-  "servers": {
     "taskMaster": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "--package=task-master-ai", "task-master-ai"],
-      "env": {
-        "ANTHROPIC_API_KEY": "${env:ANTHROPIC_API_KEY}",
-        "PERPLEXITY_API_KEY": "${env:PERPLEXITY_API_KEY}"
-      }
+    "command": "docker-compose",
+    "args": ["run", "--rm", "basic-memory"],
+    "type": "stdio"
     },
     "context7": {
       "type": "stdio",
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp@latest"]
     },
-    "memoryServer": {
-        "type": "stdio",
-        "command": "docker",
-        "args": ["run", "-i", "--rm", "mcp-memory-server"]
-    }
+    "basicMemory": {
+    "command": "docker-compose",
+    "args": ["run", "--rm", "basic-memory"],
+    "type": "stdio"
+    },
+    "basicMemory-Py": {
+      "command": "uvx",
+      "args": [
+        "basic-memory",
+        "mcp"
+      ]
   }
 }
