@@ -1,0 +1,6 @@
+# .yamllint.yaml
+
+extends: default  # Optional: keeps other default rules active
+rules:
+  brackets: disable
+  line-length: disable

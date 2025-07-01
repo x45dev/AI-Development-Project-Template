@@ -1,0 +1,122 @@
+# .mise.toml - Manage development tools, environment, and tasks
+
+# Load environment variables from .env file(s)
+# - Declare multiple '_.file' directives by wrapping them in an array; ie `[[env]]`.
+# - Declare environment variables after .env files for local overrides.
+[[env]]
+_.file = ".env"
+_.python.venv = { path = ".venv", create = true, uv_create_args = ['--seed'] }
+
+[[env]]
+# _.file = ".env.sops.yaml"
+
+# --- .env file overrides --- 
+BUILDKIT_PROGRESS = "plain"
+EDITOR = "emacs"
+
+# --- Mise Configuration ---
+[settings]
+experimental = true  # Enable experimental features
+python.uv_venv_create_args = ["--seed"]
+
+# --- Tools ---
+[tools]
+age = "latest"
+go = "1.24"           # For Fabric - https://github.com/danielmiessler/fabric
+hadolint = "latest"   # Dockerfile linter
+jq = "latest"
+mc = "latest"
+python = "3.13"
+shellcheck = "latest"  # Shell linter
+sops = "latest"
+uv = "latest"
+yamllint = "latest"    # YAML linter
+yq = "latest"
+
+# --- Tasks ---
+# Development Environment Setup
+[tasks.venv]
+description = "Create/update the local Python virtual environment using uv."
+run = '''
+uv venv .venv --python $PYTHON_VERSION  # Create venv named .venv using mise python
+uv sync --all-groups -p $(mise which python)  # Sync all dependencies
+'''
+alias = ["python-venv"]
+
+# Linting and Formatting
+[tasks.lint]
+description = "Run linters (Ruff, ShellCheck, Hadolint, yamllint)."
+run = '''
+echo "Linting Python code with Ruff..."
+uvx ruff check . --extend-ignore=E501,S108  # Don't enforce: line length.
+
+echo "Checking Python formatting with Ruff..."
+uvx ruff format --check .
+
+echo "Linting Shell Scripts..."
+shellcheck ./scripts/*.sh  ./foo/*.sh 
+
+echo "Linting Dockerfiles..."
+hadolint ./backend/Dockerfile ./frontend/Dockerfile --ignore=DL3008 --ignore=SC2086  # Don't enforce: pinning Apt packages; double quoting globs.
+
+echo "Linting YAML files..."
+yamllint . --no-warnings
+'''
+
+# Python
+[tasks.python-format]
+description = "Format code using Ruff."
+run = '''
+echo "Formatting Python code with Ruff..."
+uvx ruff format .
+echo "Fixing lint errors with Ruff (where possible)..."
+uvx ruff check . --fix
+'''
+alias = ["format"]
+
+[tasks.python-cleanup]
+description = "Delete unwanted Python artifacts (pytest, coverage, etc.) from the ./backend/ subproject"
+run = '''# Delete unwanted run/test/build artifacts
+test -f ./backend/.pytest_cache && rm -rf ./backend/.pytest_cache
+test -f ./backend/.ruff_cache && rm -rf ./backend/.ruff_cache
+test -f ./backend/coverage && rm ./backend/coverage
+find . -type d -iname __pycache__ -print | xargs rm -rf
+echo "Done!"
+'''
+alias = ["cleanup"]
+
+# Secrets Management
+[tasks.encrypt]
+description = "Encrypt and/or edit the secrets file in-place using SOPS."
+run = 'sops .env.sops.yaml'
+
+[tasks.decrypt]
+description = "DEBUG ONLY: Decrypt secrets file to stdout."
+run = 'sops -d .env.sops.yaml'
+
+# --- Local Docker Compose Tasks ---
+[tasks.local-up]
+description = "Build and start local containers/servers in detached mode."
+run = 'mise run local-down && docker compose up -d --build --remove-orphans'
+alias = ["up"]
+
+[tasks.local-down]
+description = "Stop and remove local containers/servers and volumes."
+run = 'docker compose down' # `-v` removes volumes (data loss!)
+alias = ["down"]
+
+[tasks.local-logs]
+description = "Follow logs from local containers/servers."
+run = 'docker compose logs -f "$@"' # Allow passing service names (e.g., mise run logs -- webserver)
+alias = ["log"]
+
+[tasks.local-exec]
+description = "Execute a command inside a running local development container."
+# Example: mise run local-exec -- backend bash -c 'echo foo'
+run = 'docker compose exec "$@"'
+alias = ["exec"]
+
+[tasks.local-ps]
+description = "List running local development containers."
+run = 'docker compose ps'
+alias = ["ps"]

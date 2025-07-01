@@ -1,0 +1,51 @@
+#.gitignore
+# --- #
+
+# Environment files
+# Explicitly ALLOW .env files (non-secret configuration variables) to be tracked.
+# Explicitly ALLOW .env.sops.yaml files (SOPS-encrypted secrets) to be tracked.
+!.env
+!.env.*
+!.env.sops.yaml
+!.env.sops.example.yaml
+
+
+# Mise
+.mise/
+mise*  # Ignore downloaded binaries/shims
+
+# SOPS / Age
+# IGNORE key files.
+age.txt
+keys.txt
+
+# SSH keys
+# IGNORE SSH private key, but ALLOW the public key.
+git-sync-key
+!git-sync-key.pub
+
+# Python
+__pycache__/
+*.egg
+*.egg-info/
+*.pyc
+*.pyo
+*.pyd
+.coverage
+.coverage.*
+.pytest_cache/
+.Python
+.ruff_cache/
+.venv/
+build/
+dist/
+htmlcov/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

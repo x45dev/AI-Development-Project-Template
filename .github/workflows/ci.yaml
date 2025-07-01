@@ -1,0 +1,63 @@
+# .github/workflows/ci.yaml
+# CI Pipeline: Linting, Building, Optional Deploy
+name: CI Checks & Deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  lint:
+    name: Lint Codebase
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up mise
+        uses: jdx/mise-action@v2
+        with:
+          experimental: true
+
+      - name: Configure (trust) Mise
+        # Installs python, uv, ruff, shellcheck, hadolint, yamllint, etc.
+        run: mise install
+
+      - name: Install Tools via Mise
+        # Installs python, uv, ruff, shellcheck, hadolint, yamllint, etc.
+        run: mise install
+
+      - name: Run Linters via Mise task
+        # This task now uses ruff, shellcheck, hadolint, yamllint
+        run: mise run lint
+
+  build:
+    name: Build Docker Images
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      matrix:
+        component: [backend, frontend]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build ${{ matrix.component }} Image
+        uses: docker/build-push-action@v5
+        with:
+          context: . # Build context is root now for pyproject.toml access
+          file: ./${{ matrix.component }}/Dockerfile
+          # Pass build args if needed
+          # build-args: |
+          #   PYTHON_VERSION=...
+          push: false
+          tags: ${{ matrix.component }}-mvp:test-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
