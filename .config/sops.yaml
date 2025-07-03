@@ -1,7 +1,7 @@
 # .sops.yaml - Configuration for SOPS encryption tool
 # This file is used to configure SOPS for encrypting/decrypting files.
 creation_rules:
-  - path_regex: .env.sops.yaml$
+  - path_regex: .config/.env.sops.yaml$
     # Encrypt only values under 'data' or 'stringData' keys
     # encrypted_regex: '^(data|stringData)$'
     key_regex: '.*' # Optional: If omitted in YAML/JSON, defaults to encrypting all keys. Explicitly adding is clearer.

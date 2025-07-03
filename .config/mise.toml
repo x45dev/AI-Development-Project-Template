@@ -4,11 +4,11 @@
 # - Declare multiple '_.file' directives by wrapping them in an array; ie `[[env]]`.
 # - Declare environment variables after .env files for local overrides.
 [[env]]
-_.file = ".env"
+_.file = ".config/.env"
 _.python.venv = { path = ".venv", create = true, uv_create_args = ['--seed'] }
 
 [[env]]
-# _.file = ".env.sops.yaml"
+_.file = ".config/.env.sops.yaml"
 
 # --- .env file overrides --- 
 BUILDKIT_PROGRESS = "plain"
@@ -22,11 +22,14 @@ python.uv_venv_create_args = ["--seed"]
 # --- Tools ---
 [tools]
 age = "latest"
+
 go = "1.24"            # For Fabric - https://github.com/danielmiessler/fabric
 hadolint = "latest"    # Dockerfile linter
 jq = "latest"
+lefthook = "latest"    # For Git hooks
 mc = "latest"
 node = "22"            # For MCP servers
+npm = "11"
 python = "3.13"
 shellcheck = "latest"  # Shell linter
 sops = "latest"
@@ -48,20 +51,25 @@ alias = ["python-venv"]
 [tasks.lint]
 description = "Run linters (Ruff, ShellCheck, Hadolint, yamllint)."
 run = '''
-echo "Linting Python code with Ruff..."
-uvx ruff check . --extend-ignore=E501,S108  # Don't enforce: line length.
+# DISABLED - Uncomment and update directory for Python code bases
+#echo "Linting Python code with Ruff..."
+#uvx ruff check . --extend-ignore=E501,S108  # Don't enforce: line length.
 
-echo "Checking Python formatting with Ruff..."
-uvx ruff format --check .
+# DISABLED - Uncomment and update directory for Python code bases
+#echo "Checking Python formatting with Ruff..."
+#uvx ruff format --check .
 
-echo "Linting Shell Scripts..."
-shellcheck ./scripts/*.sh  ./foo/*.sh 
+# DISABLED - Uncomment and update directory for Bash scripts
+#echo "Linting Shell Scripts..."
+#shellcheck ./scripts/*.sh  ./foo/*.sh
 
-echo "Linting Dockerfiles..."
-hadolint ./backend/Dockerfile ./frontend/Dockerfile --ignore=DL3008 --ignore=SC2086  # Don't enforce: pinning Apt packages; double quoting globs.
+# DISABLED - Uncomment and update directory for Dockerfile code bases
+#echo "Linting Dockerfiles..."
+#hadolint ./backend/Dockerfile ./frontend/Dockerfile --ignore=DL3008 --ignore=SC2086  # Don't enforce: pinning Apt packages; double quoting globs.
 
-echo "Linting YAML files..."
-yamllint . --no-warnings
+# DISABLED - Uncomment and update directory for YAML
+#echo "Linting YAML files..."
+#yamllint . --no-warnings
 '''
 
 # Python
@@ -89,11 +97,11 @@ alias = ["cleanup"]
 # Secrets Management
 [tasks.encrypt]
 description = "Encrypt and/or edit the secrets file in-place using SOPS."
-run = 'sops .env.sops.yaml'
+run = 'sops .config/.env.sops.yaml'
 
 [tasks.decrypt]
 description = "DEBUG ONLY: Decrypt secrets file to stdout."
-run = 'sops -d .env.sops.yaml'
+run = 'sops -d .config/.env.sops.yaml'
 
 # --- Local Docker Compose Tasks ---
 [tasks.local-up]

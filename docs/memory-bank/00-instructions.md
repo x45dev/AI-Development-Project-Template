@@ -59,6 +59,12 @@ flowchart TD
    - Known issues
    - Evolution of project decisions
 
+7. `development-standards/*.md` (project-wide coding and development standards)
+
+
+### Context Files (Optional)
+
+
 ### Additional Context
 Create additional files/folders within memory-bank/ when they help organize:
 - Complex feature documentation
@@ -87,6 +93,10 @@ flowchart TD
     Context --> Update[Update Documentation]
     Update --> Execute[Execute Task]
     Execute --> Document[Document Changes]
+
+## Commit Guidelines
+
+- **Always** use Commitizen for all commits to ensure standardized commit messages.
 
 ## Documentation Updates
 
