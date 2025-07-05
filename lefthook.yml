@@ -7,10 +7,6 @@ pre-commit:
       run: mise run lint
       tags: [lint]
       files: git diff --cached --name-only --diff-filter=ACM
-    format:
-      run: mise run python-format
-      tags: [format]
-      files: git diff --cached --name-only --diff-filter=ACM
 
 commit-msg:
   commands:
@@ -22,10 +18,6 @@ pre-push:
     lint:
       run: mise run lint
       tags: [lint]
-      files: git diff --cached --name-only --diff-filter=ACM
-    format:
-      run: mise run python-format
-      tags: [format]
-      files: git diff --cached --name-only --diff-filter=ACM
+      files: .
     commitizen-branch:
       run: cz check --rev-range $(git merge-base main HEAD)..HEAD

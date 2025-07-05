@@ -96,7 +96,7 @@ flowchart TD
 
 ## Commit Guidelines
 
-- **Always** use Commitizen for all commits to ensure standardized commit messages.
+- **Always** use commit messages that are conformant with the Commitizen linter.
 
 ## Documentation Updates
 

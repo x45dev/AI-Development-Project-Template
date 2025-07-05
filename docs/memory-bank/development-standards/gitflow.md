@@ -12,7 +12,7 @@ description: Gitflow workflow rules. These rules should be applied when performi
   - hotfix/* branches
   - release/* branches
 - Must be tagged with a version number after each merge
-
+git
 ### develop
 - Main development branch
 - Contains the latest delivered development changes

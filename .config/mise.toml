@@ -48,38 +48,37 @@ uv sync --all-groups -p $(mise which python)  # Sync all dependencies
 alias = ["python-venv"]
 
 # Linting and Formatting
+
 [tasks.lint]
 description = "Run linters (Ruff, ShellCheck, Hadolint, yamllint)."
 run = '''
-# DISABLED - Uncomment and update directory for Python code bases
-#echo "Linting Python code with Ruff..."
-#uvx ruff check . --extend-ignore=E501,S108  # Don't enforce: line length.
+: # Temporarily disabled - uncomment when required.
 
-# DISABLED - Uncomment and update directory for Python code bases
-#echo "Checking Python formatting with Ruff..."
-#uvx ruff format --check .
+# echo "Linting Python code with Ruff..."
+# uvx ruff check . --extend-ignore=E501,S108  # Don't enforce: line length.
 
-# DISABLED - Uncomment and update directory for Bash scripts
-#echo "Linting Shell Scripts..."
-#shellcheck ./scripts/*.sh  ./foo/*.sh
+# echo "Checking Python formatting with Ruff..."
+# uvx ruff format --check .
 
-# DISABLED - Uncomment and update directory for Dockerfile code bases
-#echo "Linting Dockerfiles..."
-#hadolint ./backend/Dockerfile ./frontend/Dockerfile --ignore=DL3008 --ignore=SC2086  # Don't enforce: pinning Apt packages; double quoting globs.
+# echo "Linting Shell Scripts..."
+# shellcheck ./scripts/*.sh  # Update this path if your scripts are elsewhere
 
-# DISABLED - Uncomment and update directory for YAML
-#echo "Linting YAML files..."
-#yamllint . --no-warnings
+# echo "Linting Dockerfiles..."
+# hadolint ./backend/Dockerfile ./frontend/Dockerfile --ignore=DL3008 --ignore=SC2086  # Don't enforce: pinning Apt packages; double quoting globs.
+
+# echo "Linting YAML files..."
+# yamllint . --no-warnings
 '''
 
 # Python
 [tasks.python-format]
 description = "Format code using Ruff."
 run = '''
-echo "Formatting Python code with Ruff..."
-uvx ruff format .
-echo "Fixing lint errors with Ruff (where possible)..."
-uvx ruff check . --fix
+: # Temporarily disabled - uncomment when required.
+# echo "Formatting Python code with Ruff..."
+# uvx ruff format .
+# echo "Fixing lint errors with Ruff (where possible)..."
+# uvx ruff check . --fix
 '''
 alias = ["format"]
 
