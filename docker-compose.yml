@@ -1,12 +1,45 @@
 services:
+  backend:
+    build:
+      context: ./services/backend
+    networks:
+      - app-network
+    volumes:
+      - ./services/backend:/app
+    secrets:
+      - db-password
+
+  frontend:
+    build:
+      context: ./services/frontend
+    ports:
+      - "4321:4321"
+    networks:
+      - app-network
+    volumes:
+      - ./services/frontend:/app
+
+  devcontainer:
+    # This service is the development container
+    image: mcr.microsoft.com/devcontainers/base:ubuntu
+    volumes:
+      # Mount the entire project directory into the container
+      - ..:/workspaces/${COMPOSE_PROJECT_NAME}:cached
+      # Mount the Docker socket to enable Docker-outside-of-Docker
+      - /var/run/docker.sock:/var/run/docker-host.sock
+    # Keep the container running
+    command: sleep infinity
+
   basic-memory:
+    container_name: basic-memory-mcp
     image: ghcr.io/basicmachines-co/basic-memory:latest
     volumes:
-      -./memory-bank:/data/knowledge:rw # Persist memory to the local memory-bank folder
+      -./memory-bank:/data/knowledge:rw  # Persist memory to the local memory-bank folder
     stdin_open: true
     tty: true
 
   task-master:
+    container_name: task-master-mcp
     image: node:20-slim
     command: npx -y --package=task-master-ai task-master-ai
     environment:
@@ -18,8 +51,13 @@ services:
       - OPENROUTER_API_KEY=${OPENROUTER_KEY}
       - XAI_API_KEY=${XAI_KEY}
       - AZURE_OPENAI_API_KEY=${AZURE_KEY}
-    # This makes the server accessible to the VSCode agent via stdio
-    # when configured with a 'docker run' command.
     stdin_open: true
     tty: true
 
+networks:
+  app-network:
+    driver: bridge
+
+secrets:
+  db-password:
+    file: ./.config/.db_password

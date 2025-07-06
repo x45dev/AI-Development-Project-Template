@@ -1,0 +1,52 @@
+// .devcontainer/devcontainer.json
+{
+    "name": "AI-Powered Development Environment",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+    // This allows you to bind mount your local source code into a new container.
+    "remoteEnv": {
+        "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+    },
+
+    "features": {
+        // Enables Docker-outside-of-Docker functionality
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+            "version": "latest"
+        },
+        // Integrates Mise for tool management
+        "ghcr.io/devcontainers-extra/features/mise:1": {},
+        // Installs the Gemini CLI tool
+        "ghcr.io/devcontainers-contrib/features/gemini-cli:1": {}
+    },
+
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.docker",
+                "ms-azuretools.vscode-docker",
+                "GitHub.copilot",
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "astro-build.astro-vscode",
+                "bradlc.vscode-tailwindcss"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "terminal.integrated.profiles.linux": {
+                    "bash": {
+                        "path": "/bin/bash",
+                        "icon": "terminal-bash"
+                    }
+                }
+            }
+        }
+    },
+    
+    // Run commands after the container is created
+    "postCreateCommand": "mise install",
+
+    // Connect as the default 'vscode' user
+    "remoteUser": "vscode"
+}

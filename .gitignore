@@ -9,6 +9,8 @@
 !.env.sops.yaml
 !.env.sops.example.yaml
 
+# Docs
+memory-bank/_development-standards/  # Temporary
 
 # Mise
 .mise/

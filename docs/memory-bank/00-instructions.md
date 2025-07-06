@@ -18,7 +18,7 @@ flowchart TD
     AC --> P[progress.md]
 
 ### Core Files (Required)
-1. `projectbrief.md`
+1. `projectBrief.md`
    - Foundation document that shapes all other files
    - Created at project start if it doesn't exist
    - Defines core requirements and goals
