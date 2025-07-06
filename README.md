@@ -167,6 +167,8 @@ The three phases of the workflow are:
 
 # Getting Started
 ## Environment Setup
+For AI Agents, begin by consulting `.config/GEMINI.md` for initial instructions and context priming.
+
 - Launch DevContainer
 - Validate environment 
     - ensure that the project directory is mounted
