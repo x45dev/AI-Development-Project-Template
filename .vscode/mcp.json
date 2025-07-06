@@ -1,25 +1,32 @@
-//.vscode/mcp.json
 {
-    "taskMaster": {
-    "command": "docker-compose",
-    "args": ["run", "--rm", "basic-memory"],
-    "type": "stdio"
+    "task-master": {
+        "command": "docker",
+        "args": [
+            "compose",
+            "run",
+            "--rm",
+            "task-master"
+        ],
+        "type": "stdio"
     },
     "context7": {
-      "type": "stdio",
-      "command": "npx",
-      "args": ["-y", "@upstash/context7-mcp@latest"]
+        "command": "docker",
+        "args": [
+            "compose",
+            "run",
+            "--rm",
+            "context7"
+        ],
+        "type": "stdio"
     },
-    "basicMemory": {
-    "command": "docker-compose",
-    "args": ["run", "--rm", "basic-memory"],
-    "type": "stdio"
-    },
-    "basicMemory-Py": {
-      "command": "uvx",
-      "args": [
-        "basic-memory",
-        "mcp"
-      ]
-  }
+    "basic-memory": {
+        "command": "docker",
+        "args": [
+            "compose",
+            "run",
+            "--rm",
+            "basic-memory"
+        ],
+        "type": "stdio"
+    }
 }

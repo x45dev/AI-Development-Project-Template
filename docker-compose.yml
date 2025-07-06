@@ -1,24 +1,26 @@
+---
 services:
-  backend:
-    build:
-      context: ./services/backend
-    networks:
-      - app-network
-    volumes:
-      - ./services/backend:/app
-    secrets:
-      - db-password
+# # EXAMPLE - TEMPORARILY DISABLED - DO NOT DELETE
+#   backend:
+#     build:
+#       context: ./services/backend
+#     networks:
+#       - app-network
+#     volumes:
+#       - ./services/backend:/app
+#     secrets:
+#       - db-password
 
-  frontend:
-    build:
-      context: ./services/frontend
-    ports:
-      - "4321:4321"
-    networks:
-      - app-network
-    volumes:
-      - ./services/frontend:/app
-
+# # EXAMPLE - TEMPORARILY DISABLED - DO NOT DELETE
+#   frontend:
+#     build:
+#       context: ./services/frontend
+#     ports:
+#       - "4321:4321"
+#     networks:
+#       - app-network
+#     volumes:
+#       - ./services/frontend:/app
   devcontainer:
     # This service is the development container
     image: mcr.microsoft.com/devcontainers/base:ubuntu
@@ -29,15 +31,19 @@ services:
       - /var/run/docker.sock:/var/run/docker-host.sock
     # Keep the container running
     command: sleep infinity
-
   basic-memory:
     container_name: basic-memory-mcp
     image: ghcr.io/basicmachines-co/basic-memory:latest
     volumes:
-      -./memory-bank:/data/knowledge:rw  # Persist memory to the local memory-bank folder
+      - ./docs/memory-bank:/data/knowledge:rw  # Persist memory to the local memory-bank folder
     stdin_open: true
     tty: true
-
+  context7:
+    container_name: context7-mcp
+    image: node:20-slim
+    command: npx -y @upstash/context7-mcp@latest
+    stdin_open: true
+    tty: true
   task-master:
     container_name: task-master-mcp
     image: node:20-slim
@@ -53,11 +59,10 @@ services:
       - AZURE_OPENAI_API_KEY=${AZURE_KEY}
     stdin_open: true
     tty: true
-
 networks:
   app-network:
     driver: bridge
-
-secrets:
-  db-password:
-    file: ./.config/.db_password
+# # EXAMPLE - TEMPORARILY DISABLED - DO NOT DELETE
+# secrets:
+#   db-password:
+#     file: ./.config/.db_password

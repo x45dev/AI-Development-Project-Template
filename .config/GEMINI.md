@@ -31,3 +31,11 @@ graph TD
     D --> E[docs/memory-bank/]
     E --> F{Standards, Workflows, Context Docs}
 ```
+
+## DevContainer Specific Instructions
+
+When working within the DevContainer, please note the following:
+
+*   **Gemini CLI Authentication**: For persistent authentication, you will need to manually run `gcloud auth application-default login` in the DevContainer's terminal after it has been created or if your credentials expire. This is a one-time interactive step.
+*   **AGE Key**: Your AGE key is mounted into the DevContainer at `/home/vscode/.config/sops/age/keys.txt`.
+*   **Docker Compose Services**: Essential services, including MCP servers, are automatically started via `docker compose up -d` as part of the `postCreateCommand` in `.devcontainer/devcontainer.json`.

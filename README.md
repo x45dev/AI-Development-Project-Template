@@ -78,11 +78,6 @@ The three phases of the workflow are:
 ├── .github/
 │   └── workflows/
 │       └── ci.yaml
-├── .ruff_cache/
-│   └── 0.12.2/...
-├── .venv/
-│   ├── bin/...
-│   └── lib/...
 ├── .vscode/
 │   └── mcp.json
 ├── docs/

@@ -52,22 +52,20 @@ alias = ["python-venv"]
 [tasks.lint]
 description = "Run linters (Ruff, ShellCheck, Hadolint, yamllint)."
 run = '''
-: # Temporarily disabled - uncomment when required.
-
 # echo "Linting Python code with Ruff..."
 # uvx ruff check . --extend-ignore=E501,S108  # Don't enforce: line length.
 
 # echo "Checking Python formatting with Ruff..."
 # uvx ruff format --check .
 
-# echo "Linting Shell Scripts..."
-# shellcheck ./scripts/*.sh  # Update this path if your scripts are elsewhere
+echo "Linting Shell Scripts..."
+shellcheck ./scripts/*.sh  # Update this path if your scripts are elsewhere
 
 # echo "Linting Dockerfiles..."
 # hadolint ./backend/Dockerfile ./frontend/Dockerfile --ignore=DL3008 --ignore=SC2086  # Don't enforce: pinning Apt packages; double quoting globs.
 
-# echo "Linting YAML files..."
-# yamllint . --no-warnings
+echo "Linting YAML files..."
+yamllint . --config-file=./.config/yamllint.yaml --no-warnings
 '''
 
 # Python
