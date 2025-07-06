@@ -23,7 +23,7 @@ description: Instructions for setting up Python projects with uv and pyproject.t
 
 ### Type Checking
 
-- **`ty`**: Use `ty` (from astro.sh) for static type checking.
+- **`ty`**: Use ([`ty`](https://docs.astral.sh/ty/)) for static type checking.
 
 ### Example `pyproject.toml`
 
@@ -38,4 +38,13 @@ line-length = 88
 
 [tool.ruff.lint]
 select = ["E", "F", "I"]
+
+[tool.ty.environment]
+python = "../../.venv"
+python-platform = "linux"
+python-version = "3.13"
+root = ["./src"]
+
+[tool.ty.rules]
+index-out-of-bounds = "ignore"
 ```
