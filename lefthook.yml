@@ -1,23 +1,49 @@
 # lefthook.yml
-# Git hooks managed by lefthook
+# This file configures Git hooks using lefthook to enforce code quality and commit standards.
 
+# pre-commit hook: Runs before a commit is created.
+# Used to lint staged files to ensure code quality before committing.
 pre-commit:
   commands:
+    # Lint staged files using 'mise run lint'.
+    # Only processes files that are added, copied, modified, or renamed.
     lint:
       run: mise run lint
       tags: [lint]
       files: git diff --cached --name-only --diff-filter=ACM
 
+# commit-msg hook: Runs after a commit message is provided, but before the commit is finalized.
+# Used to validate the commit message against Conventional Commits specification.
 commit-msg:
   commands:
+    # Validates the commit message using Commitizen.
+    # Ensures the message adheres to the project's conventional commit standards.
     commitizen:
       run: exec cz check --commit-msg-file "{1}"
 
+# pre-push hook: Runs before pushing changes to a remote repository.
+# Used to perform final checks on the entire codebase and validate commit messages of new commits.
 pre-push:
   commands:
+    # Lints the entire codebase before pushing to ensure no linting issues are introduced.
     lint:
       run: mise run lint
       tags: [lint]
       files: .
+    # Validates commit messages for the range of commits being pushed.
+    # This ensures all new commits adhere to Conventional Commits standards before reaching the remote.
     commitizen-branch:
-      run: cz check --rev-range $(git merge-base main HEAD)..HEAD
+      run: |
+        # Get the range of commits to be pushed relative to the 'main' branch.
+        # This identifies only the new commits that are about to be pushed.
+        RANGE=$(git merge-base main HEAD)..HEAD
+
+        # Check if there are any commits in the calculated range.
+        # This prevents 'cz check' from failing if there are no new commits to validate (e.g., on a rebase or merge).
+        if [ "$(git rev-list --count $RANGE)" -gt 0 ]; then
+          echo "Checking commit messages in range: $RANGE"
+          # Run Commitizen check on the identified range of new commits.
+          cz check --rev-range $RANGE
+        else
+          echo "No new commits to check in range: $RANGE. Skipping commitizen check."
+        fi
