@@ -55,57 +55,114 @@ The three phases of the workflow are:
 ## Project Structure
 ```
 /
+├── .aiignore
+├── .dockerignore
+├── .editorconfig
+├── .gitignore
+├── .pre-commit-config.yaml
+├── .yamllint.yaml
+├── docker-compose.yml
+├── README.md
 ├── .config/
-│   ├── .env                   # Local environment variables (gitignored)
-│   ├── .env.sops.yaml         # Encrypted environment variables for production/staging
-│   ├── GEMINI.md              # High-level instructions for the Gemini AI Agent
-│   ├── mise.toml              # Project-specific tool configuration for mise
-│   └── sops.yaml              # SOPS configuration for secret encryption
+│   ├── .env
+│   ├── .env.sops.example.yaml
+│   ├── .env.sops.yaml
+│   ├── cz.toml
+│   ├── GEMINI.md
+│   ├── lefthook.yml
+│   ├── mise.toml
+│   └── sops.yaml
 ├── .devcontainer/
-│   └── devcontainer.json      # Dev container configuration for a consistent environment
+│   └── devcontainer.json
+├── .git/...
+├── .github/
+│   └── workflows/
+│       └── ci.yaml
+├── .ruff_cache/
+│   └── 0.12.2/...
+├── .venv/
+│   ├── bin/...
+│   └── lib/...
 ├── .vscode/
-│   └── settings.json          # VSCode workspace settings
+│   └── mcp.json
 ├── docs/
 │   ├── CHANGELOG.md
 │   ├── CONTRIBUTING.md
 │   ├── LICENSE
-│   ├── README.md
+│   ├── getting-started/
+│   │   ├── fabric_create-memory-bank.md
+│   │   ├── memory-bank-prd.md
+│   │   ├── setup.md
+│   │   └── planning-framework/
+│   │       ├── 00-overview.md
+│   │       └── 01-step-by-step-guide.md
 │   └── memory-bank/
-│       ├── projectBrief.md    # Describes the high-level vision, core problem statement, and key business objectives
-│       ├── productContext.md  # Describes user personas, user stories, and specific pain points being addressed
-│       ├── techContext.md     # Describes technologies, frameworks, and libraries in use, along with development environment setup instructions and any known technical constraints
-│       ├── systemPatterns.md  # Describes high-level system architecture, major components, data flows, and significant technical decisions or design patterns
-│       ├── progress.md        # Dynamic append-only log of completed tasks and key milestones achieved.
-│       ├── activeContext.md   # Dynamic, frequently updated, log of current task in progress, blockers, and next steps.
-│       ├── standards/         # Coding standards for various languages
+│       ├── 00-instructions.md
+│       ├── activeContext.md
+│       ├── projectBrief.md
+│       ├── productContext.md
+│       ├── techContext.md
+│       ├── systemPatterns.md
+│       ├── progress.md
+│       ├── standards/
+│       │   ├── README.md
 │       │   ├── astro/
+│       │   │   ├── htmx.md
+│       │   │   ├── project-setup.md
+│       │   │   └── tailwindcss.md
 │       │   ├── bash/
+│       │   │   └── style-guide.md
 │       │   ├── docker/
+│       │   │   └── best-practices.md
 │       │   ├── general/
+│       │   │   ├── code-style.md
+│       │   │   ├── commenting.md
+│       │   │   ├── conventional-commits.md
+│       │   │   ├── database.md
+│       │   │   ├── git-workflow.md
+│       │   │   └── naming-conventions.md
 │       │   └── python/
-│       └── workflows/         # AI agent workflow models
+│       │       ├── dependencies.md
+│       │       ├── deployment.md
+│       │       ├── development-workflow.md
+│       │       ├── documentation.md
+│       │       ├── error-handling.md
+│       │       ├── fastapi.md
+│       │       ├── performance.md
+│       │       ├── project-setup.md
+│       │       ├── pydantic.md
+│       │       ├── security.md
+│       │       ├── testing.md
+│       │       └── type-hinting.md
+│       └── workflows/
+│           ├── analyse-code.md
 │           ├── analyze-issue.md
 │           ├── bugfix.md
-│           └── ...
-├── services/
-│   ├── backend/               # Example Python/FastAPI service
-│   │   ├── Dockerfile
-│   │   ├── pyproject.toml
-│   │   └── src/
-│   └── frontend/              # Example Astro/TailwindCSS service
-│       ├── Dockerfile
-│       ├── package.json
-│       └── src/
-├── infra/                     # Infrastructure-as-code manifests
+│           ├── check.md
+│           ├── clean.md
+│           ├── commits.md
+│           ├── context-prime.md
+│           ├── create-docs.md
+│           ├── five-whys.md
+│           ├── implement-task.md
+│           └── update-docs.md
+├── infra/
 │   └── kubernetes/
-│       └── ...
+│       └── .gitkeep
 ├── scripts/
-│   ├── setup.sh               # Project setup script
-│   └── test.sh                # Script to run all project tests
-├── .dockerignore
-├── .gitignore
-├── docker-compose.yml
-└── README.md                  # Main project README with links to docs/
+│   ├── setup.sh
+│   └── test.sh
+└── services/
+    ├── backend/
+    │   ├── Dockerfile
+    │   ├── pyproject.toml
+    │   └── src/
+    │       └── .gitkeep
+    └── frontend/
+        ├── Dockerfile
+        ├── package.json
+        └── src/
+            └── .gitkeep
 ```
 
 # Getting Started
