@@ -15,6 +15,16 @@ A brief description of the project.
 
 # About The Project
 
+## Project Overview
+This project is a template for developing applications using AI Agents, Model Context Protocol (MCP) servers, and LLMs. It uses DevContainers and `mise` to manage the project environment, including development applications and secrets management.
+
+### General
+
+- The project follows the clean root workspace convention, with dotfiles located in the `.config/` directory where possible.
+- Secrets are managed using `sops` and `age`.
+- The project uses `fabric` for creating memory banks and PRDs.
+
+
 ## Project Structure
 ```
 /
@@ -37,8 +47,11 @@ A brief description of the project.
 │       ├── active-context.md
 │       ├── project-overview.md
 │       ├── standards/      # Coding standards for various languages
-│       │   ├── python/
-│       │   └── astro/
+│       │   ├── astro/
+│       │   ├── bash/
+│       │   ├── docker/
+│       │   ├── general/
+│       │   └── python/
 │       └── workflows/      # AI agent workflow models
 │           ├── analyze-issue.md
 │           ├── bugfix.md
