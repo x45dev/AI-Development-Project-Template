@@ -1,44 +1,38 @@
 # Five Whys Analysis
 
-Use the "Five Whys" root cause analysis technique to deeply understand problems.
+This workflow guides the AI agent in performing a "Five Whys" root cause analysis to deeply understand the underlying reasons for a problem, rather than just addressing its symptoms.
 
 ## Process:
 
 ### 1. Define the Problem
-Clearly state the issue or symptom
+*   **Action**: Clearly and concisely state the issue or symptom that needs to be analyzed. This should be the starting point of the causal chain.
+    *   **Example**: "The application crashes when processing large files."
 
-### 2. Ask "Why?" Five Times
-- Why did this problem occur? → Answer 1
-- Why did Answer 1 happen? → Answer 2  
-- Why did Answer 2 happen? → Answer 3
-- Why did Answer 3 happen? → Answer 4
-- Why did Answer 4 happen? → Answer 5 (Root Cause)
+### 2. Ask "Why?" Iteratively (Up to Five Times)
+*   **Action**: For each identified problem or cause, ask "Why did this happen?" or "What caused this?" Record the answer as the next link in the causal chain.
+*   **Action**: Continue asking "Why?" for each subsequent answer until a root cause is identified. Aim for approximately five iterations, but stop when a fundamental, actionable cause is reached.
 
-### 3. Validate Root Cause
-- Verify the logical chain
-- Check if addressing root cause prevents recurrence
-- Consider multiple root causes if applicable
+    *   **Example Iteration:**
+        1.  **Problem**: Application crashes when processing large files.
+        2.  **Why?** → It runs out of memory.
+        3.  **Why?** → It loads the entire file into memory at once.
+        4.  **Why?** → The file parser was not designed for streaming.
+        5.  **Why?** → Initial requirements only specified small files, and future growth was not considered during design.
+
+### 3. Validate the Root Cause
+*   **Action**: Review the entire causal chain from the initial problem to the identified root cause.
+*   **Action**: Verify the logical connection between each step. Ask: "If we address this root cause, will it prevent the initial problem from recurring?"
+*   **Action**: Consider if there might be multiple independent root causes contributing to the problem. If so, perform separate Five Whys analyses for each.
 
 ### 4. Develop Solutions
-- Address the root cause, not just symptoms
-- Create preventive measures
-- Consider systemic improvements
+*   **Action**: Formulate solutions that directly address the identified root cause(s), rather than just the symptoms.
+*   **Action**: Propose preventive measures to ensure the problem does not recur.
+*   **Action**: Consider systemic improvements to processes, design, or development practices that emerged from the analysis.
+*   **Action**: Present the findings and proposed solutions to the user.
 
-## Example:
-**Problem**: Application crashes when processing large files
-
-1. **Why?** → The application runs out of memory
-2. **Why?** → It loads entire file into memory at once
-3. **Why?** → The file parser wasn't designed for streaming
-4. **Why?** → Initial requirements only specified small files
-5. **Why?** → Requirements gathering didn't consider future growth
-
-**Root Cause**: Incomplete requirements gathering process
-**Solution**: Implement streaming parser and improve requirements process
-
-## Best Practices:
-- Focus on process, not people
-- Look for systemic issues
-- Document the analysis
-- Involve relevant stakeholders
-- Test solutions address root cause
+## Best Practices for Agents:
+*   **Focus on Process, Not People**: The analysis should identify flaws in processes or systems, not assign blame to individuals.
+*   **Be Objective**: Stick to facts and observable evidence.
+*   **Drill Down**: Avoid superficial answers. Keep asking "Why?" until a fundamental cause is reached.
+*   **Document Thoroughly**: Record each step of the analysis, including the problem, each "why" question, and its corresponding answer.
+*   **Actionable Root Cause**: Ensure the identified root cause is something that can be addressed through a concrete action or change.
